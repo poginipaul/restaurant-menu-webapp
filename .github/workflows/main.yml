@@ -38,8 +38,8 @@ jobs:
                 key: ${{ secrets.SSH_KEY }}
                 port: ${{ secrets.PORT }}
                 script: |
-                    docker load < /tmp/resturant-menu-webapp.tar
-                    docker stop resturant-menu-webapp || true
+                    docker load < /tmp/restaurant-menu-webapp.tar
+                    docker stop restaurant-menu-webapp || true
                     docker rm restaurant-menu-webapp || true
                     docker run -d \
                         --name restaurant-menu \
