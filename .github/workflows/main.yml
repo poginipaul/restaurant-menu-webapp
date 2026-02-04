@@ -43,7 +43,7 @@ jobs:
                     docker rm restaurant-menu-webapp || true
                     docker run -d \
                         --name restaurant-menu \
-                        -p 8080:80 \
+                        -p 8080:5000 \
                         --restart unless-stopped \
                         restaurant-menu-webapp:latest
                         rm /tmp/restaurant-menu-webapp.tar
