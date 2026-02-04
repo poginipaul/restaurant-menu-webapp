@@ -1,0 +1,49 @@
+name: Deploying A Restaurant Menu Web App
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    build-and-deploy:
+        runs-on: ubuntu-latest
+    
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            
+            - name: Build Docker Image
+              run: |
+                docker build -t restaurant-menu-webapp:latest .
+            
+            - name: Save Docker Image
+              run: docker save restaurant-menu-webapp:latest > restaurant-menu-webapp.tar
+            
+            - name: Copy Image to Server
+              uses: appleboy/scp-action@v0.1.4
+              with:
+                host: ${{ secrets.HOST }}
+                username: ${{ secrets.USERNAME }}
+                key: ${{ secrets.SSH_KEY }}
+                port: ${{ secrets.PORT }}
+                source: "restaurant-menu-webapp"
+                target: "/tmp"
+            
+            - name: Load Container
+              uses: appleboy/ssh-action@v1.0.3
+              with:
+                host: ${{ secrets.HOST }}
+                username: ${{ secrets.USERNAME }}
+                key: ${{ secrets.SSH_KEY }}
+                port: ${{ secrets.PORT }}
+                script: |
+                    docker load < /tmp/resturant-menu-webapp.tar
+                    docker stop resturant-menu-webapp || true
+                    docker rm restaurant-menu-webapp || true
+                    docker run -d \
+                        --name restaurant-menu \
+                        -p 8080:80 \
+                        --restart unless-stopped \
+                        restaurant-menu-webapp:latest
+                        rm /tmp/restaurant-menu-webapp.tar
