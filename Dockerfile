@@ -10,4 +10,8 @@ COPY . .
 
 EXPOSE 5000
 
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
+ENV FLASK_APP finalproject.py
+
+ENV FLASK_RUN_HOST 0.0.0.0
+
+CMD ["flask", "run"]
