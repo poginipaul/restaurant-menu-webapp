@@ -36,7 +36,7 @@ jobs:
                 host: ${{ secrets.HOST }}
                 username: ${{ secrets.USERNAME }}
                 key: ${{ secrets.SSH_KEY }}
-                port: ${{ secrets.PORT }} #
+                port: ${{ secrets.PORT }} ##
                 script: |
                     docker load < /tmp/restaurant-menu-webapp.tar
                     docker stop restaurant-menu-webapp || true
