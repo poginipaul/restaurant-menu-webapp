@@ -24,7 +24,7 @@ jobs:
               uses: appleboy/scp-action@v0.1.4
               with:
                 host: ${{ secrets.HOST }}
-                username: ${{ secrets.USERNAME }}
+                username: ${{ secrets.USER }}
                 key: ${{ secrets.SSH_KEY }}
                 port: ${{ secrets.PORT }}
                 source: "restaurant-menu-webapp.tar"
@@ -34,7 +34,7 @@ jobs:
               uses: appleboy/ssh-action@v1.0.3
               with:
                 host: ${{ secrets.HOST }}
-                username: ${{ secrets.USERNAME }}
+                username: ${{ secrets.USER }}
                 key: ${{ secrets.SSH_KEY }} 
                 port: ${{ secrets.PORT }} #
                 script: |
